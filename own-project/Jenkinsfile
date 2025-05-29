@@ -1,19 +1,19 @@
 pipeline {
     agent any
+
     stages {
         stage('Build Docker Image') {
             steps {
-                script {
-                    docker.build("hello-java")
+                dir('own-project') {
+                    sh 'docker build -t hello-java .'
                 }
             }
         }
         stage('Run Container') {
             steps {
-                script {
-                    docker.image("hello-java").run()
-                }
+                sh 'docker run --rm hello-java'
             }
         }
     }
 }
+
